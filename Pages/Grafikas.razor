@@ -1,0 +1,33 @@
+﻿@page "/grafikas"
+@using Microsoft.AspNetCore.Components
+
+<Row>
+    <Column ColumnSize="ColumnSize.IsHalf.OnWidescreen">
+        <Card Margin="Margin.Is4.OnY">
+            <CardHeader>
+                <CardTitle>Metalų varžos priklausomybė nuo temperatūros</CardTitle>
+            </CardHeader>
+            <CardBody>
+                <LineChart @ref="horizontalLineChart" TItem="LiveDataPoint" OptionsObject="@horizontalLineChartOptions">
+                    <ChartStreaming TItem="LiveDataPoint"
+                                    Options="new ChartStreamingOptions { Delay = 2000 }"
+                                    Refreshed="@OnHorizontalLineRefreshed1" />
+                </LineChart>
+            </CardBody>
+            <CardFooter>Temperatūros keitimas
+                <Slider TValue="decimal" Value="@ivestaTemp" Min="0" Max="100" ValueChanged="@MyValueChangeHandler"/>
+                <output>@ivestaTemp</output>
+            </CardFooter>
+        </Card>
+    </Column>
+</Row>
+
+@code
+{
+    public decimal ivestaTemp { get; set; } = 0;
+
+    public void MyValueChangeHandler(decimal reiksme)
+    {
+        ivestaTemp = reiksme;
+    }
+}
